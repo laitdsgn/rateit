@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/icon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="left">
+                <a href="../index.html" class="logo-xs lexend-deca-font">rateit! </a>
+                <a href="../index.html" class="link-hover">
+                    <ul>Home</ul>
+                </a>
+                <a href="products.html" class="link-hover">
+                    <ul>Products</ul>
+                </a>
+            </div>
+            <div class="search-center">
+                <input type="text" name="search" id="search" placeholder="Search...">
+                <button type="submit" class="searchButton"><i class="material-icons searchIcon">search</i></button>
+            </div>
+            <div class="right">
+                <a href="login.html" class="link-hover">
+                    <ul>Login</ul>
+                </a>
+                <a href="register.html" class="link-hover">
+                    <ul>Register</ul>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="side-menu">
+            <button id="add-product">Dodaj produkt</button>
+
+        </div>
+
+        <div class="products">
+            <div class="product">
+                <div class="product-content">
+                    <h2>Przykładowy produkt 1</h2>
+                    <hr>
+                    <p>Karta graficzna Palit RTX 5090 GAMEROCK 32GB GDDR7</p>
+                    <p>Kategoria: Kategoria</p>
+                    <p>Ocena: 1/5</p>
+                </div>
+                <div class="product-functional">
+                    <button id="rate-product">Oceń</button>
+                </div>
+            </div>
+            <div class="product">
+                <div class="product-content">
+                    <h2>Przykładowy produkt 2</h2>
+                    <hr>
+                    <p>Klawiatura DARK PROJECT DPO87 Violet Horizons</p>
+                    <p>Kategoria: Kategoria</p>
+                    <p>Ocena: 5/5</p>
+                </div>
+                <div class="product-functional">
+                    <button id="rate-product">Oceń</button>
+                </div>
+            </div>
+            <div class="product">
+                <div class="product-content">
+                    <h2>Przykładowy produkt 3</h2>
+                    <hr>
+                    <p>Słuchawki MAD DOG GH003 Nauszne</p>
+                    <p>Kategoria: Elektronika
+                    </p>
+                    <p>Ocena: 3/5</p>
+                </div>
+                <div class="product-functional">
+                    <button id="rate-product">Oceń</button>
+                </div>
+            </div>
+            <div class="product">
+                <div class="product-content">
+                    <h2>Przykładowy produkt 4</h2>
+                    <hr>
+                    <p>Mysz STEELSERIES Rival 3</p>
+                    <p>Kategoria: Kategoria</p>
+                    <p>Ocena: 2/5</p>
+                </div>
+                <div class="product-functional">
+                    <button id="rate-product">Oceń</button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="popup-container-add">
+            <div class="popup-add">
+                <div class="popup-content">
+                    <span class="close-popup"><i class="material-icons Close">close</i></span>
+                    <h2>Dodaj produkt</h2>
+                    <form action="" method="post" id="add-product-form">
+                        <input type="text" name="name" id="name" placeholder="Nazwa produktu"><br>
+                        <input type="text" name="description" id="description" placeholder="Opis produktu"><br>
+                        <select name="category" id="category">
+                            <option value="default" selected="selected">Wybierz kategorię</option>
+                            <option value="Gry">Gry</option>
+                            <option value="Filmy">Filmy</option>
+                            <option value="Książki">Książki</option>
+                            <option value="Elektronika">Elektronika</option>
+                            <option value="Inne">Inne</option>
+                        </select><br>
+                        <button type="submit" id="final-add-product">Dodaj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup-container-rate">
+            <div class="popup-rate">
+                <div class="popup-content">
+                    <span class="close-popup"><i class="material-icons Close">close</i></span>
+                    <h2>Oceń produkt</h2>
+                    <form action="" method="post" id="rate-product-form">
+                        <input type="number" name="rate" id="rate" min="1" max="5" placeholder="Ocena (1-5)"><br>
+                        <button type="submit" id="final-rate-product">Oceń</button>
+                    </form>
+                </div>
+            </div>
+
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>rateit by laitdsgn &copy; 2025</p>
+        </div>
+    </footer>
+
+    <script src="../scripts/script.js"></script>
+</body>
+
+</html>
