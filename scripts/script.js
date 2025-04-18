@@ -20,3 +20,4 @@ rateProduct.forEach((rate) => {
         popupRateWindow.classList.add('popup-container-active');
     });
 });
+  

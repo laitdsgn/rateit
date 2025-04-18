@@ -591,3 +591,22 @@ footer {
     font-size: 30px;
   }
 }
+
+/* ERROR  */
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#err {
+  display: none;
+  margin-top: 3vh;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  background-color: #ff00009d;
+  border-radius: 5vh;
+  border: 1px solid #cf00009d;
+  padding: 10px 40px 10px 40px;
+}
