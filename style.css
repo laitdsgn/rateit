@@ -610,3 +610,7 @@ footer {
   border: 1px solid #cf00009d;
   padding: 10px 40px 10px 40px;
 }
+
+#logout {
+  display: none;
+}
