@@ -125,7 +125,30 @@ switch ($action) {
         }
         echo json_encode($reviews);
         break;
+    case 'login':
+        if (isset($_POST['username']) && isset($_POST['pass'])) {
+            $username = $conn->real_escape_string($_POST['username']);
+            $pass = $_POST['pass'];
 
+            $query = "SELECT id, username FROM users WHERE username = '$username' AND pass = '$pass'";
+            $result = $conn->query($query);
+
+            if ($result->num_rows > 0) {
+                $user = $result->fetch_assoc();
+                echo json_encode([
+                    "success" => true,
+                    "user" => [
+                        "id" => $user['id'],
+                        "username" => $user['username']
+                    ]
+                ]);
+            } else {
+                echo json_encode(["error" => "Invalid username or password"]);
+            }
+        } else {
+            echo json_encode(["error" => "Missing username or password"]);
+        }
+        break;
     default:
         echo json_encode(["error" => "Invalid action"]);
 }

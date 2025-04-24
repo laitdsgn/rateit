@@ -598,6 +598,9 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  z-index: 0;
+  position: absolute;
 }
 
 #err {
@@ -611,6 +614,30 @@ footer {
   padding: 10px 40px 10px 40px;
 }
 
+.success {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 0;
+  position: absolute;
+}
+
+#succ {
+  display: none;
+  margin-top: 3vh;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  background-color: #1dc71da1;
+  border-radius: 5vh;
+  border: 1px solid #00ff00a1;
+  padding: 10px 40px 10px 40px;
+}
+
 #logout {
   display: none;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  text-decoration: underline;
+  text-shadow: 1px 1px 0 #0000005d;
 }
