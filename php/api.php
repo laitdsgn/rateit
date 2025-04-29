@@ -63,6 +63,11 @@ switch ($action) {
 
     // Product operations
     case 'createProduct':
+        if (empty($name) || empty($description) || empty($category)) {
+            echo json_encode(['success' => false, 'message' => 'Wszystkie pola są wymagane']);
+            exit;
+        }
+
         if (isset($_POST['name']) && isset($_POST['category'])) {
             $name = $conn->real_escape_string($_POST['name']);
             $category = $conn->real_escape_string($_POST['category']);

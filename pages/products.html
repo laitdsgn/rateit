@@ -34,22 +34,23 @@
                     <ul>Register</ul>
                 </a>
 
-                <p id="logout">Wyloguj</p>
             </div>
         </nav>
     </header>
 
     <div class="error">
-        <p id="err">sadsadasdad</p>
+        <p id="err"></p>
     </div>
 
     <div class="success">
-        <p id="succ">ddsdasd</p>
+        <p id="succ"></p>
     </div>
 
     <main>
         <div class="side-menu">
             <button id="add-product">Dodaj produkt</button>
+
+            <p id="logout">Wyloguj</p>
         </div>
 
         <div class="products">
@@ -65,8 +66,6 @@
                     <button id="rate-product">Oceń</button>
                 </div>
             </div>
-
-
         </div>
 
 
@@ -118,6 +117,13 @@
     <script src="../scripts/script.js"></script>
     <script src="../scripts/auth.js"></script>
     <script src="../scripts/products.js"></script>
+    <noscript>
+        <style>
+            * {
+                display: none;
+            }
+        </style>
+    </noscript>
 </body>
 
 </html>
