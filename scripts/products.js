@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const AddProductForm = document.querySelector("#add-product-form");
-  const AddProductButton = document.querySelector("#final-add-product");
+  const RateProductForm = document.querySelector("#rate-product-form");
   const popupAddWindow = document.querySelector(".popup-container-add");
   const popupRateWindow = document.querySelector(".popup-container-rate");
   const err = document.querySelector("#err");
   const succ = document.querySelector("#succ");
-
+  const userString = sessionStorage.getItem("user");
+  const user = userString ? JSON.parse(userString) : null;
+  const user_id = user ? user.id : null;
+  let data_id;
   const productsContainer = document.querySelector(".products");
 
   function removeErrSuccInfo() {
@@ -59,14 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       productsContainer.appendChild(productDiv);
 
-      document.querySelectorAll("#rate-product").forEach((productButton) => {
-        let data_id = productButton.getAttribute("data-id");
-        console.log(data_id);
-
-        productButton.addEventListener("click", () => {
-          popupRateWindow.classList.add("popup-container-active");
+      document
+        .querySelectorAll(".rate-product-btn")
+        .forEach((productButton) => {
+          productButton.addEventListener("click", () => {
+            data_id = productButton.getAttribute("data-id");
+            popupRateWindow.classList.add("popup-container-active");
+          });
         });
-      });
     });
   }
 
@@ -135,4 +138,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   addProducts();
+
+  function RateProducts() {
+    RateProductForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      rating = document.querySelector("#rate").value;
+
+      fetch("http://localhost/API/api.php?action=createReview", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          product_id: data_id,
+          rating: rating,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success || data.message) {
+            succ.style.display = "block";
+            succ.textContent = "Dodano ocenę pomyślnie.";
+            removeErrSuccInfo();
+            popupRateWindow.classList.remove("popup-container-active");
+            setTimeout(function () {
+              getProducts();
+            }, 1000);
+          } else {
+            err.style.display = "block";
+            err.textContent = "Nie udało się dodać oceny.";
+            removeErrSuccInfo();
+            popupRateWindow.classList.remove("popup-container-active");
+          }
+        });
+    });
+  }
+
+  RateProducts();
 });
