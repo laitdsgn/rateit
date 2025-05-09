@@ -8,8 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const userString = sessionStorage.getItem("user");
   const user = userString ? JSON.parse(userString) : null;
   const user_id = user ? user.id : null;
+  const is_user_master = user ? user.is_master : 0;
   let data_id;
   const productsContainer = document.querySelector(".products");
+
+  sessionStorage.setItem("is_master", is_user_master);
 
   function removeErrSuccInfo() {
     setTimeout(() => {
@@ -24,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         if (Array.isArray(data)) {
           displayProducts(data);
+          deleteProducts();
         } else {
           console.error("Nieprawidłowy format danych:", data);
         }
@@ -43,10 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     products.forEach((product) => {
       const productDiv = document.createElement("div");
+      const deleteButtonStyle = is_user_master === 1 ? "" : "display:none;";
       productDiv.className = "product";
 
       productDiv.innerHTML = `
       <div class="product-content">
+        <p class="productId">#${product.id}</p>
+        <p class="deleteProduct" data-id="${
+          product.id
+        }" style="${deleteButtonStyle}">x</p>
         <h2>${product.name || "Brak nazwy"}</h2>
         <hr>
         <p>${product.description || "Brak opisu"}</p>
@@ -71,6 +80,56 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         });
     });
+  }
+
+  function deleteProducts() {
+    if (is_user_master === 1) {
+      const deleteProducts = document.querySelectorAll(".deleteProduct");
+
+      deleteProducts.forEach((deleteButton) => {
+        deleteButton.style.display = "block";
+
+        deleteButton.addEventListener("click", () => {
+          const productId = deleteButton.getAttribute("data-id");
+
+          console.log(productId);
+
+          fetch("http://localhost/API/api.php?action=deleteProduct", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: productId,
+              is_master: is_user_master,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success || data.message) {
+                succ.style.display = "block";
+                succ.textContent = "Usunięto produkt pomyślnie.";
+                removeErrSuccInfo();
+
+                setTimeout(function () {
+                  getProducts();
+                }, 1000);
+              } else {
+                err.style.display = "block";
+                err.textContent = "Nie udało się usunąć produktu.";
+                removeErrSuccInfo();
+              }
+              console.log(data);
+            })
+            .catch((err_fetch) => {
+              err.style.display = "block";
+              err.textContent = "Wystąpił błąd podczas usuwania.";
+              removeErrSuccInfo();
+              console.error("Fetch error", err_fetch);
+            });
+        });
+      });
+    }
   }
 
   function addProducts() {
@@ -105,8 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("response", data);
-
             if (data.success || data.message) {
               succ.style.display = "block";
               succ.textContent = "Dodano produkt pomyślnie.";

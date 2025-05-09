@@ -41,7 +41,7 @@ switch ($action) {
             $username = $conn->real_escape_string($_POST['username']);
             $pass = $_POST['pass'];
 
-            $query = "INSERT INTO users (username, pass) VALUES ('$username', '$pass')";
+            $query = "INSERT INTO users (username, pass, is_master) VALUES ('$username', '$pass', 0)";
             if ($conn->query($query)) {
                 echo json_encode(["message" => "User created"]);
             } else {
@@ -53,7 +53,7 @@ switch ($action) {
         break;
 
     case 'getUsers':
-        $result = $conn->query("SELECT id, username, created_at FROM users");
+        $result = $conn->query("SELECT id, username, created_at, is_master FROM users");
         $users = [];
         while ($row = $result->fetch_assoc()) {
             $users[] = $row;
@@ -92,7 +92,21 @@ switch ($action) {
         }
         echo json_encode($products);
         break;
+    case 'deleteProduct':
+        if (isset($_POST['id']) && ($_POST['is_master'] == 1)) {
+            $id = $conn->real_escape_string($_POST['id']);
 
+            if ($conn->query("DELETE FROM products WHERE id = $id")) {
+                echo json_encode(["message" => "Product deleted"]);
+            } else {
+                echo json_encode(["error" => "Failed to delete product: " . $conn->error]);
+            }
+
+        } else {
+            echo json_encode(["error" => "Missing id propably"]);
+        }
+
+        break;
     // Review operations
     case 'createReview':
         if (isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['rating'])) {
@@ -135,7 +149,8 @@ switch ($action) {
             $username = $conn->real_escape_string($_POST['username']);
             $pass = $_POST['pass'];
 
-            $query = "SELECT id, username FROM users WHERE username = '$username' AND pass = '$pass'";
+            // Make sure is_master is included in the query
+            $query = "SELECT id, username, is_master FROM users WHERE username = '$username' AND pass = '$pass'";
             $result = $conn->query($query);
 
             if ($result->num_rows > 0) {
@@ -144,7 +159,8 @@ switch ($action) {
                     "success" => true,
                     "user" => [
                         "id" => $user['id'],
-                        "username" => $user['username']
+                        "username" => $user['username'],
+                        "is_master" => (int) $user['is_master'] // Include is_master property
                     ]
                 ]);
             } else {
