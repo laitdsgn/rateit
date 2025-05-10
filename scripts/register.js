@@ -10,15 +10,21 @@ document.addEventListener("DOMContentLoaded", function () {
       const password = document.getElementById("pass").value;
       const passwordRepeat = document.getElementById("pass-repeat").value;
 
+      // Check if fields are empty, password length requirements,
+      // or if username/password contain only whitespace
       if (
         username === "" ||
         password === "" ||
         passwordRepeat === "" ||
         password.length < 8 ||
-        password.length > 20
+        password.length > 20 ||
+        username.trim() === "" || // Check if username contains only spaces
+        password.trim() === "" || // Check if password contains only spaces
+        username.includes(" ") || // Check if username contains spaces
+        password.includes(" ") // Check if password contains spaces
       ) {
         error.textContent =
-          "Pola są puste lub hasło ma mniej niż 8 albo więcej niż 20 znaków!";
+          "Pola są puste, zawierają tylko spacje lub hasło ma mniej niż 8 albo więcej niż 20 znaków!";
         error.style.display = "block";
         return;
       } else if (password == passwordRepeat) {

@@ -61,26 +61,26 @@ switch ($action) {
         echo json_encode($users);
         break;
 
-    // Product operations
     case 'createProduct':
-        if (empty($name) || empty($description) || empty($category)) {
-            echo json_encode(['success' => false, 'message' => 'Wszystkie pola są wymagane']);
-            exit;
-        }
-
-        if (isset($_POST['name']) && isset($_POST['category'])) {
+        if (isset($_POST['name']) && isset($_POST['category']) && isset($_POST['description'])) {
             $name = $conn->real_escape_string($_POST['name']);
             $category = $conn->real_escape_string($_POST['category']);
-            $description = isset($_POST['description']) ? $conn->real_escape_string($_POST['description']) : '';
+            $description = $conn->real_escape_string($_POST['description']);
+
+
+            if (empty($name) || empty($category) || empty($description)) {
+                echo json_encode(['success' => false, 'message' => 'Wszystkie pola są wymagane']);
+                exit;
+            }
 
             $query = "INSERT INTO products (name, category, description) VALUES ('$name', '$category', '$description')";
             if ($conn->query($query)) {
-                echo json_encode(["message" => "Product created"]);
+                echo json_encode(["success" => true, "message" => "Product created"]);
             } else {
-                echo json_encode(["error" => "Failed to create product: " . $conn->error]);
+                echo json_encode(["success" => false, "error" => "Failed to create product: " . $conn->error]);
             }
         } else {
-            echo json_encode(["error" => "Missing name or category"]);
+            echo json_encode(["success" => false, "error" => "Missing name, category, or description"]);
         }
         break;
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2025 at 12:48 PM
+-- Generation Time: Maj 10, 2025 at 03:23 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -35,6 +35,13 @@ CREATE TABLE `products` (
   `avg_rating` decimal(3,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `category`, `description`, `avg_rating`) VALUES
+(22, 'Tomasz', 'Filmy', '3232', 0.00);
+
 -- --------------------------------------------------------
 
 --
@@ -58,8 +65,33 @@ CREATE TABLE `users` (
   `id` smallint(6) NOT NULL,
   `username` varchar(50) NOT NULL,
   `pass` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_master` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `pass`, `created_at`, `is_master`) VALUES
+(1, 'testuser', '$2y$10$Fp/ut61Rx5H7Ln0lJ90xuOki9VvHEbdgMHjMEYcCu1Q43xx8RvIb6', '2025-04-03 15:32:43', 0),
+(4, 'testufdsser', '$2y$10$7KfNbEuK0TX6TwDJrkhuKu6P9xjY3M/k/5xQRE/Xzk23tbCYNDaCS', '2025-04-12 12:39:03', 0),
+(5, 'testufdfsdsser', '$2y$10$kSAdHgsoQNvWg88LCIkTkeuh8g8kuA9zvvl9lySGXhXv1LfbJy8tW', '2025-04-12 12:39:05', 0),
+(7, 'testuasdsadasfdfsdsser', 'yourpasfdsfdssword', '2025-04-12 12:39:22', 0),
+(8, 'laitdsgn', '12345678', '2025-04-17 13:25:53', 0),
+(10, 'jakistamziomek', 'dupa123!', '2025-04-17 13:26:52', 0),
+(14, 'fdsfsdf', 'fsdfsdfsd', '2025-04-24 13:16:41', 0),
+(15, 'fdsfsdfggg', 'fsdfsdfsd', '2025-04-24 13:17:39', 0),
+(16, 'U07UDATMUSH', '12345678', '2025-04-24 13:17:47', 0),
+(17, 'U07UDATMUSH44', '42343423', '2025-04-24 13:18:11', 0),
+(18, 'CWELLLLLLUUUU', 'CWELLLLLLUUUU', '2025-04-24 13:19:18', 0),
+(19, '4234243242', '4234243242', '2025-04-24 13:19:53', 0),
+(23, 'laitdsgn433433', '12345678', '2025-04-24 13:21:00', 0),
+(25, 'm43997_laitdsgn', 'm43997_laitdsgn', '2025-04-24 13:23:52', 0),
+(26, 'tomek08.konto@gmail.com', 'tomek08.konto@gm', '2025-04-24 13:25:00', 0),
+(27, 'laitdsgnnnn', '12345678', '2025-04-25 15:09:57', 0),
+(28, 'ziomek', '12345678', '2025-05-09 11:31:37', 1),
+(29, 'dsadasdsa', '   dddddd', '2025-05-10 13:10:16', 0);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -94,19 +126,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables

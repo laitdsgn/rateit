@@ -1,10 +1,19 @@
+/**
+ * Products Management Script
+ * Author: laitdsgn
+ * Created: 2025
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
+  // Form and UI elements
   const AddProductForm = document.querySelector("#add-product-form");
   const RateProductForm = document.querySelector("#rate-product-form");
   const popupAddWindow = document.querySelector(".popup-container-add");
   const popupRateWindow = document.querySelector(".popup-container-rate");
   const err = document.querySelector("#err");
   const succ = document.querySelector("#succ");
+
+  // User auth data
   const userString = sessionStorage.getItem("user");
   const user = userString ? JSON.parse(userString) : null;
   const user_id = user ? user.id : null;
@@ -12,8 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let data_id;
   const productsContainer = document.querySelector(".products");
 
+  // Store master status in session (is user is an admin)
   sessionStorage.setItem("is_master", is_user_master);
 
+  // Hides error and success messages after a timeout
   function removeErrSuccInfo() {
     setTimeout(() => {
       err.style.display = "none";
@@ -21,18 +32,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3000);
   }
 
+  // Fetches all products from the API and displays them
+
   function getProducts() {
     fetch("http://localhost/API/api.php?action=getProducts")
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
-          displayProducts(data);
-          deleteProducts();
+          displayProducts(data); // Render products to DOM
+          deleteProducts(); // Initialize delete functionality for master users
         } else {
           console.error("Nieprawidłowy format danych:", data);
         }
       })
       .catch((err_fetch) => {
+        // Handle API errors
         err.style.display = "block";
         err.textContent = "Wystąpił błąd podczas wyświetlania produktu.";
         removeErrSuccInfo();
@@ -82,6 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /**
+   * Initializes the delete functionality for products
+   * Master users can delete products.
+   */
   function deleteProducts() {
     if (is_user_master === 1) {
       const deleteProducts = document.querySelectorAll(".deleteProduct");
@@ -132,6 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Adds a new product by submitting the add product form
+
   function addProducts() {
     if (AddProductForm) {
       AddProductForm.addEventListener("submit", (e) => {
@@ -141,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const description = document.querySelector("#description").value;
         const category = document.querySelector("#category").value;
 
+        // Validate form inputs
         if (!name || !description || !category) {
           err.style.display = "block";
           err.textContent =
@@ -174,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
               setTimeout(function () {
                 getProducts();
               }, 1000);
+              console.log(data);
             } else {
               err.style.display = "block";
               err.textContent = "Nie udało się dodać produktu.";
@@ -196,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   addProducts();
 
+  // rating products function (1-5 stars)
   function RateProducts() {
     RateProductForm.addEventListener("submit", (e) => {
       e.preventDefault();

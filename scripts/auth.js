@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   const user = JSON.parse(sessionStorage.getItem("user"));
+  // check if user is logged in as an admin
   const is_master_auth = sessionStorage.getItem("is_master");
 
+  // if user logged in, show logout button
   if (user) {
     const wyloguj = document.getElementById("logout");
     wyloguj.style.display = "block";
@@ -13,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "login.html";
     });
 
-    if (is_master_auth) {
+    // if logged ad an admin, show message
+    if (is_master_auth == 1) {
       const status = document.getElementById("masterStatus");
 
       status.style.display = "block";

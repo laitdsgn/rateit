@@ -1,6 +1,7 @@
 const loginForm = document.getElementById("login-form");
 
 document.addEventListener("DOMContentLoaded", function () {
+  // check if loginForm exists
   if (loginForm) {
     const error = document.getElementById("err");
 
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const username = document.getElementById("username").value;
       const password = document.getElementById("pass").value;
 
+      // using API, send login request
       fetch("http://localhost/API/api.php?action=login", {
         method: "POST",
         headers: {

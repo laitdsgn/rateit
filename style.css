@@ -723,5 +723,6 @@ footer {
     position: absolute;
     top: 100%;
     left: 40%;
+    display: none;
   }
 }
