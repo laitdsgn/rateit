@@ -92,6 +92,21 @@ switch ($action) {
         }
         echo json_encode($products);
         break;
+    case 'searchProducts':
+        if (isset($_POST['name'])) {
+            $name = $conn->real_escape_string($_POST['name']);
+            $search = $conn->query("SELECT * FROM products WHERE name LIKE '%$name%'");
+
+            $products = [];
+            while ($row = $search->fetch_assoc()) {
+                $products[] = $row;
+            }
+            echo json_encode($products);
+        } else {
+            echo json_encode(["error" => "Missing name parameter"]);
+        }
+
+        break;
     case 'deleteProduct':
         if (isset($_POST['id']) && ($_POST['is_master'] == 1)) {
             $id = $conn->real_escape_string($_POST['id']);

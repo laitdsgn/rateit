@@ -32,6 +32,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3000);
   }
 
+  function searchProducts() {
+    const searchForm = document.querySelector("#search-form");
+    if (searchForm) {
+      const productNameInput = document.querySelector("#search");
+
+      searchForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        fetch("http://localhost/API/api.php?action=searchProducts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: productNameInput.value, // Use .value to get the input value
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (Array.isArray(data)) {
+              displayProducts(data);
+            }
+          })
+          .catch((error) => {
+            console.error("Search error:", error);
+            err.style.display = "block";
+            err.textContent = "Wystąpił błąd podczas wyszukiwania.";
+            removeErrSuccInfo();
+          });
+      });
+    }
+  }
+
+  searchProducts();
   // Fetches all products from the API and displays them
 
   function getProducts() {
@@ -58,6 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function displayProducts(products) {
     productsContainer.innerHTML = "";
+
+    if (products.length === 0) {
+      err.style.display = "block";
+      err.textContent = "Brak produktów do wyświetlenia.";
+      removeErrSuccInfo();
+    }
 
     products.forEach((product) => {
       const productDiv = document.createElement("div");
