@@ -50,11 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           })
           .catch((errr) => {
+            error.style.display = "block";
             error.textContent =
-              "Fetch error" +
-              errr +
-              "(Lub jest inny użytkownik o takiej nazwie)";
-            alert("Błąd krytyczny");
+              "Najprawdopodobniej użytkownik o tej nazwie już istnieje!";
           });
       } else {
         error.style.display = "block";
